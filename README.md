@@ -25,7 +25,7 @@ This is an OSC controlled FM synth with effects. This synth is implemented entir
   - On Open Stage Control, setup the send port as your local IP address, followed by the standard SuperCollider communication port. 
   - By default, the send port should be 127.0.0.1:57120. 
   - Then, press run and in the new session open the included GUI json GUI file. 
-  - You can control the GUI directly from the editor, but Open Stage Control should give you a local webpage that you can access using a web browser. 
+  - You can control the GUI directly from the editor, but Open Stage Control should give you a local webpage in the debug window, which you can access using a web browser. 
 
 
 ## **Project report with detailed discussion**
