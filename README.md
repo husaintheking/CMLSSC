@@ -9,9 +9,14 @@ This is an OSC controlled FM synth with effects. This synth is implemented entir
 
 ## **Features**
 1. Web GUI controls can be activated by any mobile device. 
-2. Functions with standard MIDI keybaords. 
-4. Four presets: basic, compound, nested, feedback. 
-5. Four effects: distortion, phaser, delay, reverb. 
+2. Functions with standard MIDI keyboards. 
+4. Four presets: basic, compound, nested, feedback.
+5. More than one available modality for each preset, harmonicity and index controller.
+6. Four filters: lowpass, highpass, lowshelf, highshelf.
+7. Possibility to control each parameter of the filters.
+8. Four effects: distortion, phaser, delay, reverb.
+9. Possibility to control the envelope of carrier/modulator.
+10. Elegant vintage look. 
 
 
 ## **Instructions**
