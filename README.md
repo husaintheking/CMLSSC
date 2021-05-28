@@ -1,6 +1,6 @@
 # **FM Synthesis with Supercollider**
 
-<img src="img/fmsynth.jpg" alt="FM" width="400"/>
+<img src="img/fmsynth.jpg" alt="FM" width="600"/>
 
 ## **Overview**
 
