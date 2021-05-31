@@ -19,12 +19,12 @@ This is an OSC controlled FM synth with effects. This synth is implemented entir
 
 
 ## **Instructions**
-- The SC code can be run directly using SuperCollider. (in case of errors, run it twice)
+- The SC code can be run directly using SuperCollider.
 - To run the GUI, download Open Stage Control from [here](https://openstagecontrol.ammd.net). 
   - On Open Stage Control, setup the send port as your local IP address, followed by the standard SuperCollider communication port. 
   - By default, the send port should be 127.0.0.1:57120
   - Set MIDI address to MIDI2SC:0,0 
-  - Then, press run and in the new session open the included GUI json GUI file. 
+  - Then, press run(play button in top left) and in the new session open the included GUI json GUI file. 
   - You can control the GUI directly from the editor, but Open Stage Control should give you a local webpage in the debug window, which you can access using a web browser. 
 
 
