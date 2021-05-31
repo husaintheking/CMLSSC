@@ -1,14 +1,13 @@
 //Connect OSC in TouchOsc with port:57120
+s.boot;
 (
-s.waitForBoot
-({
 //MIDI connection
 MIDIClient.init;
 MIDIIn.connectAll;
 
 //******************** GROUPS AND BUSSES **********************************
-~synthGroup = Group.new(s);
-~myGroup = Group.after(~synthGroup);
+
+~myGroup = Group.new();
 ~fxBus = Bus.audio(s, 2);
 s.queryAllNodes;
 
@@ -21,7 +20,6 @@ s.queryAllNodes;
 	env = EnvGen.ar(Env.adsr(attack, decay, sustain, release, 1, curve), gate, doneAction:2);
 }
 );
-
 
 //******************** DEFINITIONS OF SYNTHESIZERS' ALGORITHMS **********************************
 (
@@ -111,11 +109,11 @@ SynthDef("feedback", {
 
   modSig = SinOsc.ar(freq_m + (carrierFeedback * freq_c * feedback), 0, modIndex) * env_m;
 
-  out = SinOsc.ar(freq_c + modSig, 0, amp);
+  out = SinOsc.ar(freq_c + modSig, 0, amp) * env_c;
 
   LocalOut.ar(out);
 
-  Out.ar(~fxBus, out) * env_c;
+  Out.ar(~fxBus, out);
 
 }).add;
 );
@@ -133,7 +131,7 @@ SynthDef(\delay, {
 	wet_sig = input * wet_delay;
 	dry_sig = input * (1 - wet_delay);
 
-	wet_sig = CombC.ar(wet_sig, 5, time_delay); // senza decay time perché c'è già l'enveloppe che se ne occupa!
+	wet_sig = CombC.ar(wet_sig, 5, time_delay);
 
 	out = Mix.new([dry_sig, wet_sig]);
 	Out.ar(~fxBus, out);
@@ -164,10 +162,9 @@ SynthDef(\master, {
 	var input, out, outbus = 0;
 
 	input = In.ar(~fxBus, 2);
-	out = input * master_gain;
+	out = input * master_gain * 0.1;
 
-
-	Out.ar(0, out * 0.1);
+	Out.ar(0, [out, out]);
 }).add;
 );
 
@@ -295,7 +292,7 @@ SynthDef(\master, {
 MIDIdef.noteOn(\noteOntest, { arg vel, nn, chan, src;
 
 	(
-			~notes [nn] = Synth.head (~synthGroup, ~synth_type,
+			~notes [nn] = Synth.head (~myGroup, ~synth_type,
         [
 			[vel, nn, chan, src].postln;
 				\freq_c, (nn + (~octave*12)).midicps,
@@ -309,7 +306,7 @@ MIDIdef.noteOn(\noteOntest, { arg vel, nn, chan, src;
 			\sus_c, ~sus_c,
 			\sus_m, ~sus_m,
 			\rel_c, ~rel_c,
-			\rel_m, ~rel_m,
+			\rel_m, ~rel_c,
 			\curve_c, ~curve_c,
 			\curve_m, ~curve_m,
 
@@ -335,23 +332,22 @@ MIDIdef.noteOn(\noteOntest, { arg vel, nn, chan, src;
 			\feedback, ~feedback
 
         ]);
-
 		);
-
 
 //NOTE OFF manager
 (
 MIDIdef.noteOff(\noteoff, {arg vel, nn;
 	~notes[nn].set(\gate, 0);
-	~notes[nn] = nil; })
+	~notes[nn] = nil;
+
+})
 
 );
 
-
 })
 );
-})
 )
+
 
 
 
